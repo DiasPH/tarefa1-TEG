@@ -33,12 +33,14 @@ struct Grafo* criaGrafo(int vertices){
     return grafo;
 }
 
-void addAresta(struct Grafo grafo, int origem, int destino){
-    struct Nodo* novoNodo = criaNodo(destino);
-    novoNodo->proximo = grafo->listAdj[origem];
-    grafo->listAdj[origem] = novoNodo;
-
-    novoNodo = criaNodo(origem);
-    novoNodo->proximo = grafo->listAdj[destino];
-    grafo->listAdj[destino] = novoNodo;
-}
+void addAresta(struct Grafo* grafo, int origem, int destino);
+int grauVertice(struct Grafo* grafo, int vertice);
+int* sequenciaGrafica(struct Grafo* grafo);
+int comp(const void *a, const void *b);
+int arestasParalelas(struct Grafo* grafo);
+int quantLaco(struct Grafo* grafo);
+void imprimeGrafo(struct Grafo* grafo);
+int ehSimples(struct Grafo* grafo);
+void dfs(struct Grafo* grafo, int vertice, int componente[], int vetMarca[], int* index);
+void componentesConexos(struct Grafo* grafo);   
+void info(struct Grafo* grafo);
