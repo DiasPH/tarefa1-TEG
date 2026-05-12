@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include "arq.h"
 
+#define TAMANHO_MAX_LINHA 1024
+
 //funções gerais
 
 void addAresta(struct Grafo* grafo, int origem, int destino){
@@ -193,41 +195,27 @@ void info(struct Grafo* grafo) {
 }
 
 int main(){
-  printf("\nExemplo 1\n");
-  struct Grafo* grafo1 = criaGrafo(4);
+  struct Grafo* grafo = criaGrafo(1005);
+  FILE* fptr;
+  fptr = fopen("/home/ph/TEG/tarefa1-TEG/teste2.csv", "r");
 
-  addAresta(grafo1, 0, 1);
-  addAresta(grafo1, 0, 2);
-  addAresta(grafo1, 0, 3);
-  addAresta(grafo1, 2, 1);
-  addAresta(grafo1, 2, 3);
+  if(fptr == NULL) {
+    printf("Arquivo não foi aberto\n");
+  }
+  else{
+    
+    char linha[1024];
+    int v1, v2;
+    while(fgets(linha, sizeof(linha), fptr) != NULL){
+      if(sscanf(linha, "%d %d", &v1, &v2) == 2){
+        addAresta(grafo, v1, v2);
+      }
+    }
+  }
 
-  info(grafo1);
+  info(grafo);
 
-  printf("\nExemplo 2\n");
-  struct Grafo* grafo2 = criaGrafo(5);
-
-  addAresta(grafo2, 0, 1);
-  addAresta(grafo2, 0, 4);
-  addAresta(grafo2, 0, 4);
-  addAresta(grafo2, 1, 1);
-  addAresta(grafo2, 1, 2);
-  addAresta(grafo2, 1, 2);
-  addAresta(grafo2, 2, 3);
-  addAresta(grafo2, 3 , 4);
-
-  info(grafo2);
-
-  printf("\nExemplo 3\n");
-  struct Grafo* grafo3 = criaGrafo(8);
-
-  addAresta(grafo3, 0, 1);
-  addAresta(grafo3, 1, 2);
-  addAresta(grafo3, 3, 4);
-  addAresta(grafo3, 5, 6);
-  addAresta(grafo3, 6, 7);
-
-  info(grafo3);   
+  fclose(fptr);
 
   return 0;
 }
